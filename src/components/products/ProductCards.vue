@@ -22,8 +22,8 @@ function curtirProduto() {
   curtido.value = !curtido.value
 }
 
-function abrirModal() {
-  modalAberto.value = true
+function adicionarCarrinho() {
+  alert(`${props.nome} adicionado ao carrinho!`)
 }
 </script>
 
@@ -67,8 +67,11 @@ function abrirModal() {
       </p>
 
       <div class="botoes">
-        <button class="botao" @click="abrirModal">
-          Comprar
+        <button
+          class="botao adicionar"
+          @click="adicionarCarrinho"
+        >
+          Adicionar
         </button>
 
         <button
@@ -99,6 +102,10 @@ function abrirModal() {
   display: flex;
   flex-direction: column;
   transition: 0.2s;
+}
+
+.produto:hover {
+  transform: translateY(-4px);
 }
 
 .topo {
@@ -182,17 +189,26 @@ function abrirModal() {
 .botoes {
   display: flex;
   gap: 8px;
+  margin-top: 8px;
 }
 
 .botao {
   flex: 1;
   padding: 10px;
-  border: none;
   border-radius: 8px;
-  background: #7c3aed;
-  color: #fff;
   cursor: pointer;
   transition: 0.2s;
+  font-weight: 600;
+}
+
+.adicionar {
+  background: #7c3aed;
+  border: none;
+  color: white;
+}
+
+.adicionar:hover {
+  background: #6d28d9;
 }
 
 .vermais {

@@ -8,7 +8,7 @@ const emit = defineEmits(['fechar'])
 const nomeCliente = ref('')
 const telefoneCliente = ref('')
 const enderecoCliente = ref('')
-const etapa = ref('formulario') // 'formulario' ou 'sucesso'
+const etapa = ref('formulario') 
 
 function finalizar() {
   if (!nomeCliente.value.trim() || !telefoneCliente.value.trim() || !enderecoCliente.value.trim()) {
@@ -30,8 +30,6 @@ function fechar() {
 <template>
   <div class="overlay" @click.self="fechar">
     <div class="modal">
-
-      <!-- ETAPA: Formulário -->
       <template v-if="etapa === 'formulario'">
         <button class="btn-fechar" @click="fechar">✕</button>
         <h2 class="titulo">Finalizar Compra</h2>
