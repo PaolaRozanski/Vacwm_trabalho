@@ -1,5 +1,6 @@
 <script setup>
 import { RouterLink } from 'vue-router';
+
 </script>
 
 <template>
@@ -31,8 +32,8 @@ import { RouterLink } from 'vue-router';
     }
 
     header {
-        background-color: #0d0d0f;
-        position: fixed;
+        background-color: black;
+
         top: 0; left: 0;
         width: 100%;
         z-index: 100;
@@ -46,7 +47,7 @@ import { RouterLink } from 'vue-router';
         color:#D9D9D9;
     }
     .pages .router-link-active{
-        color: #0d0d0f;
+        color: #000000;
         font-weight: bolder;
         border:#D9D9D9 2px solid;
         padding: 0.25rem 0.5rem;
@@ -54,3 +55,4 @@ import { RouterLink } from 'vue-router';
         background-color: #D9D9D9;
     }
 </style>
+

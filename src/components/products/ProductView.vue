@@ -176,4 +176,10 @@ const produto = computed(() =>
   width: fit-content;
 }
 .botao-comprar:hover { background: #6d28d9; }
+
+@media (max-width: 700px) {
+  .conteudo { grid-template-columns: 1fr; }
+  .pagina { padding: 7rem 1.5rem 2rem; }
+}
 </style>
+

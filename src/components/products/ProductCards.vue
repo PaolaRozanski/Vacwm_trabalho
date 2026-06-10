@@ -1,146 +1,209 @@
 <script setup>
-// Componentizar a exibição de um produto individual em uma lista de produtos.
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { formataPreco } from '@/utils/currencyUtils'
+import ProductShop from './ProductShop.vue'
 
-// MÍNIMO: Ele exibe as informações do produto, como nome, preço e imagem, e pode incluir um botão para adicionar o produto ao carrinho de compras.
-// O componente é projetado para ser reutilizado em diferentes partes do aplicativo onde a exibição de produtos é necessária, como na página de listagem de produtos ou em recomendações de produtos relacionados.
+const props = defineProps([
+  'id',
+  'nome',
+  'preco',
+  'imagem',
+  'categoria',
+  'avaliacao'
+])
 
-// A MAIS: Como sugestão, não exiba todas as informações do Livro, deixando alguma div oculta e trabalhando o v-for ou v-if para exibir somente o nome e o preço, e ao clicar em um botão "Detalhes" ou "Ver mais", exiba as informações adicionais do produto, como descrição, autor e imagem. Isso pode ser feito usando uma propriedade de estado para controlar a visibilidade das informações adicionais.
+const router = useRouter()
 
-import { formataPreco } from '@/utils/currencyUtils';
-import ButtonAddCart from '../buttons/ButtonAddCart.vue';
-import ButtonChild from '../buttons/ButtonChild.vue';
-import ProductInfo from './ProductInfo.vue';
-import { ref, inject } from 'vue';
+const curtido = ref(false)
+const modalAberto = ref(false)
 
-const cartItems = inject('cartItems')
-const mostrarInfo = ref(false);
-
-
-defineProps(['id', 'nome', 'preco', 'imagem', 'categoria', 'estoque', 'marca', 'avaliacao', 'descricao', 'salvar', 'quant_avaliacao']);
-
-
-function quant_prod_cart(id){
-  return cartItems.value.find(i => i.id === id)?.quantity ?? 0
+function curtirProduto() {
+  curtido.value = !curtido.value
 }
 
-function add_cart(produto){
-  const existe = cartItems.value.find(i => i.id === produto.id)
-  if(existe){
-    if(existe.quantity < produto.estoque) existe.quantity++
-  } else {
-    cartItems.value.push({...produto, quantity: 1})
-  }
+function abrirModal() {
+  modalAberto.value = true
 }
-
-
 </script>
 
-
 <template>
-  <div class="produto-card-simple" >
-    <div>
-      <h2>{{ nome }}</h2>
-      <div class="avaliacoes_fone">
-          <div>
-            <span v-for="n in 5" :key="n" class="estrela" :class="{ ativa: n <= avaliacao }">
-            ★
-          </span>
-          </div>
-          <p>{{ avaliacao }}</p>
-        </div>
+  <div class="produto">
+    <div class="topo">
+      <span class="categoria">
+        {{ categoria }}
+      </span>
+
+      <button
+        class="curtir"
+        :class="{ ativo: curtido }"
+        @click="curtirProduto"
+      >
+        {{ curtido ? '♥' : '♡' }}
+      </button>
     </div>
-    <img :src="imagem" :alt="nome" class="produto-image">
-    <p class="formata">{{ formataPreco(preco) }}</p>
-    <div class="abaixo">
 
+    <div class="imagem-box">
+      <img
+        :src="imagem"
+        :alt="nome"
+        class="imagem"
+      >
+    </div>
 
-    <ButtonAddCart
-      class="add_cart"
-      :produto="{ id, nome, preco, imagem, categoria, estoque, marca, avaliacao, descricao }"
-      :quantos="quant_prod_cart(id)"
-      @adicionar_cart="add_cart"
-    />
+    <div class="info">
+      <h3 class="nome">
+        {{ nome }}
+      </h3>
 
-    <ButtonChild class="save" @clique="mostrarInfo = true" >Veja mais</ButtonChild>
-    <ProductInfo v-if="mostrarInfo" :nome="nome" :categoria="categoria" :marca="marca" :preco="preco" @fechar="mostrarInfo = false"></ProductInfo>
-
+      <div class="avaliacao">
+        <span class="estrela">★</span>
+        <span>{{ avaliacao }}</span>
+        <span>/ 5</span>
       </div>
+
+      <p class="preco">
+        {{ formataPreco(preco) }}
+      </p>
+
+      <div class="botoes">
+        <button class="botao" @click="abrirModal">
+          Comprar
+        </button>
+
+        <button
+          class="botao vermais"
+          @click="router.push(`/produto/${id}`)"
+        >
+          Ver mais
+        </button>
+      </div>
+    </div>
   </div>
+
+  <ProductShop
+    v-if="modalAberto"
+    :id="props.id"
+    :nome="props.nome"
+    :preco="props.preco"
+    :categoria="props.categoria"
+    @fechar="modalAberto = false"
+  />
 </template>
 
-
 <style scoped>
-
-
-.produto-card-simple {
-  border: 2px solid #d9d9d9b7;
-  padding: 15px;
-  margin: 10px;
-  border-radius: 8px;
+.produto {
+  background: #1a1a24;
+  border: 1px solid rgba(124, 58, 237, 0.2);
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  transition: 0.2s;
 }
 
-.produto-image {
-  max-width: 200px;
-  height: auto;
+.topo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+}
+
+.categoria {
+  color: #a78bfa;
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.curtir {
+  background: none;
+  border: none;
+  color: #9692b0;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.curtir.ativo {
+  color: #e53e3e;
+}
+
+.imagem-box {
+  background: #22222e;
+  margin: 0 12px;
+  height: 140px;
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.imagem {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.info {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.nome {
+  margin: 0;
+  color: #fff;
+  font-size: 15px;
+}
+
+.avaliacao {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #fff;
+  font-size: 13px;
+}
+
+.avaliacao span:last-child {
+  color: #9692b0;
 }
 
 .estrela {
-  color: #d9d9d9b7;
-  font-size: 20px;
+  color: #f6c90e;
 }
 
-.estrela.ativa {
-  color: #ffea75;
-  font-size: 22px;
+.preco {
+  margin: 0;
+  color: #fff;
+  font-size: 18px;
+  font-weight: bold;
 }
 
-.avaliacoes_fone {
-    justify-content: baseline;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    flex-wrap: wrap;
-}
-
-.add_cart {
-    border-radius: 12px;
-    padding: 0.5vw 1vw;
-    border: none;
-    background: #ffea75;
-    color: #0d0d0f;
-    font-weight: bolder;
-    font-size: 1.2vw;
-}
-
-.save {
-    border-radius: 12px;
-    padding: 0.5vw 1vw;
-    border: none;
-    background: #d9d9d9b7;
-    color: #0d0d0f;
-    font-weight: bolder;
-    font-size: 1.2vw;
-}
-
-h2 {
-    font-size: 2vw;
-    font-weight: bolder;
-    color: #D9D9D9;
-    font-family: 'Oxanium', sans-serif;
-}
-
-.abaixo {
-  justify-content: baseline;
+.botoes {
   display: flex;
-  align-items: center;
-  gap: 3vw;
-  flex-wrap: wrap;
+  gap: 8px;
 }
 
-.formata {
-    font-size: 2vw;
-    color: #D9D9D9;
-    font-weight: bolder;
-    font-family: 'Oxanium', sans-serif;
+.botao {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  background: #7c3aed;
+  color: #fff;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.vermais {
+  background: transparent;
+  border: 1px solid #7c3aed;
+  color: #a78bfa;
+}
+
+.vermais:hover {
+  background: #7c3aed;
+  color: #fff;
 }
 </style>
+

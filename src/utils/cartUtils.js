@@ -1,11 +1,7 @@
-import { produtos } from "@/data/products"
-
+import products from '../data/products.js'
 const carrinho = []
-
-
-
 function addCarrinho(idFone, quantidade) {
-  const fone = produtos.find((p) => p.id === idFone)
+  const fone = products.find((p) => p.id === idFone)
   if (fone) {
     const itemExistente = carrinho.find((item) => item.id === idFone)
     if (itemExistente) {
