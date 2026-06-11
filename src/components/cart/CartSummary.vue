@@ -1,6 +1,7 @@
 <script setup>
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { formataPreco } from '@/utils/currencyUtils'
+import CartCheckout from './CartCheckout.vue'
 
 const props = defineProps({
   items: { type: Array, default: () => [] },
@@ -13,11 +14,14 @@ const subtotal = computed(() =>
 const totalItens = computed(() =>
   props.items.reduce((sum, item) => sum + item.quantity, 0)
 )
+
+const modalAberto = ref(false)
+
 </script>
 
 
 <template>
-  <div v-if="items.length > 0" class="summary">
+  <div v-if="props.items.length > 0" class="summary">
     <h3 class="titulo">Total:</h3>
 
     <div class="bloco_summary">
@@ -25,7 +29,16 @@ const totalItens = computed(() =>
       <span class="valor_total">{{ formataPreco(subtotal) }}</span>
     </div>
 
-    <button class="comprar">Finalizar compra</button>
+    <button class="comprar" @click="modalAberto = true">
+      Finalizar compra
+    </button>
+
+  <CartCheckout
+    v-if="modalAberto"
+    :items="props.items"
+    @fechar="modalAberto = false"
+  />
+
   </div>
 </template>
 
