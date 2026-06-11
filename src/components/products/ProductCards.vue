@@ -1,18 +1,25 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, inject } from 'vue'
 import { useRouter } from 'vue-router'
 import { formataPreco } from '@/utils/currencyUtils'
 import ProductShop from './ProductShop.vue'
+import ButtonAddCart from '../buttons/ButtonAddCart.vue'
 
-const props = defineProps([
-  'id',
-  'nome',
-  'preco',
-  'imagem',
-  'categoria',
-  'avaliacao'
-])
+const props = defineProps({
+  id: Number,
+  nome: String,
+  preco: Number,
+  imagem: String,
+  categoria: String,
+  estoque: Number,
+  marca: String,
+  avaliacao: Number,
+  descricao: String,
+  salvar: Boolean,
+  quant_avaliacao: Number,
+})
 
+const cartItems = inject('cartItems')
 const router = useRouter()
 
 const curtido = ref(false)
@@ -22,64 +29,67 @@ function curtirProduto() {
   curtido.value = !curtido.value
 }
 
-function adicionarCarrinho() {
-  alert(`${props.nome} adicionado ao carrinho!`)
+function quant_prod_cart(id) {
+  return cartItems.value.find(item => item.id === id)?.quantity ?? 0
+}
+
+function add_cart(produto) {
+  const existe = cartItems.value.find(item => item.id === produto.id)
+
+  if (existe) {
+    if (existe.quantity < produto.estoque) {
+      cartItems.value = cartItems.value.map(item =>
+        item.id === produto.id
+          ? { ...item, quantity: item.quantity + 1 }
+          : item
+      )
+    }
+  } else {
+    cartItems.value = [...cartItems.value, { ...produto, quantity: 1 }]
+  }
 }
 </script>
 
 <template>
   <div class="produto">
     <div class="topo">
-      <span class="categoria">
-        {{ categoria }}
-      </span>
-
-      <button
-        class="curtir"
-        :class="{ ativo: curtido }"
-        @click="curtirProduto"
-      >
+      <span class="categoria">{{ categoria }}</span>
+      <button class="curtir" :class="{ ativo: curtido }" @click="curtirProduto">
         {{ curtido ? '♥' : '♡' }}
       </button>
     </div>
 
     <div class="imagem-box">
-      <img
-        :src="imagem"
-        :alt="nome"
-        class="imagem"
-      >
+      <img :src="imagem" :alt="nome" class="imagem">
     </div>
 
     <div class="info">
-      <h3 class="nome">
-        {{ nome }}
-      </h3>
+      <h3 class="nome">{{ nome }}</h3>
 
-      <div class="avaliacao">
-        <span class="estrela">★</span>
+      <div class="avaliacoes">
+        <span
+          v-for="n in 5"
+          :key="n"
+          class="estrela"
+          :class="{ ativa: n <= Number(avaliacao) }"
+        >★</span>
         <span>{{ avaliacao }}</span>
-        <span>/ 5</span>
       </div>
 
-      <p class="preco">
-        {{ formataPreco(preco) }}
-      </p>
+      <p class="preco">{{ formataPreco(preco) }}</p>
 
       <div class="botoes">
-        <button
-          class="botao adicionar"
-          @click="adicionarCarrinho"
-        >
-          Adicionar
-        </button>
 
-        <button
-          class="botao vermais"
-          @click="router.push(`/produto/${id}`)"
-        >
+        <button class="botao vermais" @click="router.push(`/produto/${id}`)">
           Ver mais
         </button>
+
+        <ButtonAddCart
+          class="botao adicionar"
+          :produto="{ id, nome, preco, imagem, categoria, estoque, marca, avaliacao, descricao }"
+          :quantos="quant_prod_cart(id)"
+          @adicionar_cart="add_cart"
+        />
       </div>
     </div>
   </div>
@@ -176,6 +186,10 @@ function adicionarCarrinho() {
 }
 
 .estrela {
+  color: #444;
+}
+
+.estrela.ativa {
   color: #f6c90e;
 }
 
@@ -205,6 +219,7 @@ function adicionarCarrinho() {
   background: #7c3aed;
   border: none;
   color: white;
+  border-radius: 8px;
 }
 
 .adicionar:hover {

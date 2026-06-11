@@ -31,9 +31,13 @@ const produto = computed(() =>
         <p class="marca">{{ produto.marca }}</p>
 
         <div class="avaliacao">
-          <span class="estrela">★</span>
-          <span>{{ produto.avaliacao }}</span>
-          <span class="muted">/ 5</span>
+          <div>
+            <span v-for="n in 5" :key="n" class="estrela" :class="{ ativa: n <= Number(produto.avaliacao) }">
+            ★
+          </span>
+          </div>
+          <p><span> {{ produto.avaliacao }}</span> / 5</p>
+          <p>( {{ produto.quant_avaliacao }} avaliações )</p>
         </div>
 
         <p class="descricao">{{ produto.descricao }}</p>
@@ -140,7 +144,13 @@ const produto = computed(() =>
   gap: 4px;
   font-size: 0.9rem;
 }
-.estrela { color: #f6c90e; }
+.estrela {
+  color: #444;
+}
+
+.estrela.ativa {
+  color: #f6c90e;
+}
 .muted { color: #9692b0; font-size: 0.8rem; }
 
 .descricao {
@@ -180,6 +190,11 @@ const produto = computed(() =>
 @media (max-width: 700px) {
   .conteudo { grid-template-columns: 1fr; }
   .pagina { padding: 7rem 1.5rem 2rem; }
+}
+
+p span {
+  font-size: 1.25vw;
+  font-weight: bold;
 }
 </style>
 

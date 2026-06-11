@@ -27,15 +27,21 @@ const produtosFiltrados = computed(() => {
 
     <div class="produtos">
 
-      <ProductCards
-        v-for="produto in produtosFiltrados"
-        :key="produto.id"
-        :id="produto.id"
-        :nome="produto.nome"
-        :preco="produto.preco"
-        :imagem="produto.imagem"
-        :categoria="produto.categoria"
-      />
+
+    <ProductCards
+      v-for="produto in produtosFiltrados"
+      :key="produto.id"
+      :id="produto.id"
+      :nome="produto.nome"
+      :preco="produto.preco"
+      :imagem="produto.imagem"
+      :categoria="produto.categoria"
+      :estoque="produto.estoque"
+      :marca="produto.marca"
+      :avaliacao="produto.avaliacao"
+      :descricao="produto.descricao"
+      :quant_avaliacao="produto.quant_avaliacao"
+    />
 
     </div>
 
