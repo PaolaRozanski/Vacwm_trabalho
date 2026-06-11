@@ -44,7 +44,7 @@ export const produtos = [
     imagem:
       '/images/phonee 2.png',
       salvar: false,
-      quant_avaliacao: 40,
+      quant_avaliacao: 42,
   },
 
   {
@@ -76,7 +76,7 @@ export const produtos = [
     imagem:
       '/images/phoneejbl 2.png',
     salvar: false,
-    quant_avaliacao: 20,
+    quant_avaliacao: 33,
   },
 
   {
@@ -106,7 +106,7 @@ export const produtos = [
     descricao:
       'Headset leve com conexão bluetooth e wireless.',
     imagem:
-      '/images/phoneejbl 2.png',
+      '/images/otrofonedajbl.webp',
     salvar: false,
     quant_avaliacao: 20,
   },
@@ -128,6 +128,7 @@ export const produtos = [
   },
 
   {
+    quant_avaliacao: 42,
   id: 9,
   nome: 'JBL Pulse X',
   marca: 'JBL',
@@ -144,7 +145,7 @@ export const produtos = [
 
 {
   id: 10,
-  quant_avaliacao: 20,
+  quant_avaliacao: 36,
   nome: 'Sony Cloud Alpha',
   marca: 'Sony',
   categoria: 'Confort',
@@ -160,7 +161,7 @@ export const produtos = [
 
 {
   id: 11,
-  quant_avaliacao: 20,
+  quant_avaliacao: 27,
   nome: 'JBL Wave Buds',
   marca: 'JBL',
   categoria: 'Unobtrusive',
@@ -170,13 +171,13 @@ export const produtos = [
   descricao:
     'Fones compactos bluetooth com ótima autonomia.',
   imagem:
-    '/images/JBLearin.webp',
+    '/images/JBLearIn.webp',
   salvar: false,
 },
 
 {
   id: 12,
-  quant_avaliacao: 20,
+  quant_avaliacao: 47,
   nome: 'Bose WH-CH520',
   marca: 'Bose',
   categoria: 'Confort',
@@ -186,7 +187,7 @@ export const produtos = [
   descricao:
     'Headphone leve com graves intensos.',
   imagem:
-    '/images/headFonEBOSE.avif',
+    '/images/boseofone.avif',
   salvar: false,
 },
 
@@ -218,7 +219,7 @@ export const produtos = [
   descricao:
     'Fones discretos com conexão rápida bluetooth.',
   imagem:
-    '/images/headFonEBOSE.avif',
+    '/images/inearBose.avif',
   salvar: false,
 },
 
@@ -234,7 +235,7 @@ export const produtos = [
   descricao:
     'Headset gamer profissional com microfone removível.',
   imagem:
-    '/images/arinBOSE.avif',
+    '/images/earinBOSE.avif',
   salvar: false,
 },
 
@@ -282,7 +283,7 @@ export const produtos = [
   descricao:
     'Headset confortável para longas sessões.',
   imagem:
-    '/images/hyperx2.png',
+    '/images/fonedabose.avif',
   salvar: false,
 },
 {
@@ -297,12 +298,12 @@ export const produtos = [
   descricao:
     'Headphone discreto com ótima duração de bateria.',
   imagem:
-    '/images/edifier1.png',
+    '/images/foneeeebose.avif',
   salvar: false,
 },
 {
   id: 20,
-  quant_avaliacao: 30,
+  quant_avaliacao: 31,
   nome: 'JBL Quantum 400',
   marca: 'JBL',
   categoria: 'Premium',
@@ -312,7 +313,7 @@ export const produtos = [
   descricao:
     'Headset gamer com áudio surround imersivo.',
   imagem:
-    '/images/jblquantum1.png',
+    '/images/umfonedajbl.webp',
   salvar: false,
 },
 

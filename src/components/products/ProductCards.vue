@@ -114,9 +114,6 @@ function add_cart(produto) {
   transition: 0.2s;
 }
 
-.produto:hover {
-  transform: translateY(-4px);
-}
 
 .topo {
   display: flex;

@@ -19,7 +19,7 @@ const destaques = computed(() =>
           Sentir cada<br />
           <span class="destaque">batida</span>
         </h1>
-        <p class="descricao">e viver a música.</p>
+        <p class="subtitulo">e viver a música.</p>
         <button class="botao">Ver produtos</button>
       </div>
       <div class="imagem">
@@ -35,7 +35,7 @@ const destaques = computed(() =>
         <span class="icone">🚚</span>
         <div>
           <strong>Frete grátis</strong>
-          <p>Em compras acima de R$ 180</p>
+          <p>Em compras acima de R$ 250,00</p>
         </div>
       </div>
       <div class="beneficio">
@@ -49,7 +49,7 @@ const destaques = computed(() =>
         <span class="icone">🛡️</span>
         <div>
           <strong>Garantia de qualidade</strong>
-          <p>7 dias para devolução</p>
+          <p>15 dias para devolução</p>
         </div>
       </div>
       <div class="beneficio">
@@ -92,10 +92,10 @@ const destaques = computed(() =>
   align-items: center;
   gap: 2rem;
   padding: 4rem 3rem;
-  background: #1a237e;
+  background: #030841;
 }
 .subtitulo {
-  color: #9692b0;
+  color: #d7d6e2;
   font-size: 0.95rem;
   margin-bottom: 0.25rem;
 }
