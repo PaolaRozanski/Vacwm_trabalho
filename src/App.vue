@@ -30,6 +30,5 @@ provide('cartItems', cartItems)
 
 <style scoped>
 
-
 </style>
 
