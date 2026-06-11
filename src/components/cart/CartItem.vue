@@ -86,7 +86,7 @@ const totalItems = computed(() => props.items.reduce((s, i) => s + i.quantity, 0
 .cart_item {
   background: #1a1a24;
   border: 2px solid rgba(124, 58, 237, 0.2);
-  border-radius: 12px;
+  border-radius: 8px;
   padding: 12px;
   display: flex;
   align-items: center;
